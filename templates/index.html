@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}" dir="{{ 'rtl' if lang == 'ar' else 'ltr' }}" class="lang-{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t.page_title }}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='5') }}">
+</head>
+<body>
+    <header class="site-header" id="top">
+        <div class="top-bar">
+            <span class="top-bar__locations">{{ t.top_locations }}</span>
+            <div class="top-bar__lang" aria-label="{{ t.aria_lang }}">
+                <a href="{{ url_for('set_language', lang='ar') }}" class="{{ 'is-active' if lang == 'ar' else '' }}" lang="ar">العربية</a>
+                <span class="sep">|</span>
+                <a href="{{ url_for('set_language', lang='en') }}" class="{{ 'is-active' if lang == 'en' else '' }}" lang="en">English</a>
+            </div>
+        </div>
+
+        <nav class="navbar" aria-label="{{ t.aria_nav }}">
+            <a href="#top" class="logo logo--brand" aria-label="{{ t.logo_alt }}">
+                <img class="logo__img" src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ t.logo_alt }}" width="200" height="52" loading="eager" decoding="async">
+                <span class="logo__tagline" aria-hidden="true">Saud Shehatha CONSTRUCTION</span>
+            </a>
+
+            <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
+                <span class="nav-toggle__bar"></span>
+                <span class="nav-toggle__bar"></span>
+                <span class="nav-toggle__bar"></span>
+                <span class="visually-hidden">{{ t.nav_open_menu }}</span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#top">{{ t.nav_home }}</a></li>
+                <li><a href="#projects">{{ t.nav_projects }}</a></li>
+
+                <li class="has-dropdown">
+                    <a href="#sectors">{{ t.nav_sectors }}</a>
+                    <ul class="dropdown">
+                        <li><a href="#sectors">{{ t.nav_sub_contracting }}</a></li>
+                        <li><a href="#sectors">{{ t.nav_sub_realestate }}</a></li>
+                        <li><a href="#sectors">{{ t.nav_sub_facilities }}</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#story">{{ t.nav_about }}</a></li>
+                <li><a href="#news">{{ t.nav_news }}</a></li>
+                <li><a href="#contact">{{ t.nav_contact }}</a></li>
+            </ul>
+
+            <a href="#contact" class="btn btn--primary btn--sm nav-cta">{{ t.nav_cta }}</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <video class="hero__video" autoplay muted loop playsinline>
+            <source src="{{ url_for('static', filename='images/hero-video.mp4') }}" type="video/mp4">
+        </video>
+
+        <div class="hero__overlay" aria-hidden="true"></div>
+
+        <div class="hero__inner">
+            <p class="hero__eyebrow">{{ t.hero_eyebrow }}</p>
+            <h1 class="hero__title">{{ t.hero_title | safe }}</h1>
+            <p class="hero__lead">{{ t.hero_lead }}</p>
+
+            <div class="hero__actions">
+                <a href="#projects" class="btn btn--primary">{{ t.hero_btn_projects }}</a>
+                <a href="#contact" class="btn btn--ghost">{{ t.hero_btn_contact }}</a>
+            </div>
+        </div>
+
+        <a href="#sectors" class="hero__scroll">{{ t.hero_scroll }}</a>
+    </section>
+
+    <section class="section section--light" id="sectors">
+        <div class="container">
+            <header class="section-head">
+                <h2 class="section-head__title">{{ t.sectors_title }}</h2>
+                <p class="section-head__text">{{ t.sectors_lead }}</p>
+            </header>
+            <div class="sectors-grid">
+                <article class="sector-card">
+                    <div class="sector-card__icon" aria-hidden="true"></div>
+                    <h3 class="sector-card__title">{{ t.sector_real_estate }}</h3>
+                </article>
+                <article class="sector-card">
+                    <div class="sector-card__icon"></div>
+                    <h3 class="sector-card__title">{{ t.sector_contracting }}</h3>
+                </article>
+                <article class="sector-card">
+                    <div class="sector-card__icon"></div>
+                    <h3 class="sector-card__title">{{ t.sector_hospitality }}</h3>
+                </article>
+                <article class="sector-card">
+                    <div class="sector-card__icon"></div>
+                    <h3 class="sector-card__title">{{ t.sector_industrial }}</h3>
+                </article>
+                <article class="sector-card">
+                    <div class="sector-card__icon"></div>
+                    <h3 class="sector-card__title">{{ t.sector_education }}</h3>
+                </article>
+                <article class="sector-card">
+                    <div class="sector-card__icon"></div>
+                    <h3 class="sector-card__title">{{ t.sector_facilities }}</h3>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--muted" id="story">
+        <div class="container story">
+            <div class="story__content">
+                <h2 class="section-head__title section-head__title--left">{{ t.story_title }}</h2>
+                <p class="story__text">{{ t.story_text }}</p>
+                <a href="#contact" class="link-more">{% if lang == 'ar' %}{{ t.story_more }} ←{% else %}→ {{ t.story_more }}{% endif %}</a>
+            </div>
+            <ul class="stats" aria-label="{{ t.stats_aria }}">
+                <li class="stat">
+                    <span class="stat__num" data-count="12">0</span>
+                    <span class="stat__label">{{ t.stat_years }}</span>
+                </li>
+                <li class="stat">
+                    <span class="stat__num" data-count="12">0</span>
+                    <span class="stat__label">{{ t.stat_projects }}</span>
+                </li>
+                <li class="stat">
+                    <span class="stat__num" data-count="800">0</span>
+                    <span class="stat__label">{{ t.stat_employees }}</span>
+                </li>
+                <li class="stat">
+                    <span class="stat__num" data-count="5">0</span>
+                    <span class="stat__label">{{ t.stat_companies }}</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section section--dark" id="projects">
+        <div class="container">
+            <header class="section-head section-head--on-dark">
+                <h2 class="section-head__title">{{ t.projects_title }}</h2>
+                <p class="section-head__text">{{ t.projects_lead }}</p>
+                <a href="#contact" class="btn btn--primary btn--sm">{{ t.projects_more_btn }}</a>
+            </header>
+            <div class="projects-grid">
+                <article class="project-card">
+                    <div class="project-card__media">
+                        <img src="{{ url_for('static', filename='images/hero-bg.jpeg') }}" alt="" width="800" height="600" loading="lazy" onerror="this.parentElement.classList.add('project-card__media--fallback')">
+                    </div>
+                    <div class="project-card__body">
+                        <span class="project-card__loc">{{ t.proj1_loc }}</span>
+                        <h3 class="project-card__title">{{ t.proj1_title }}</h3>
+                        <a href="#contact" class="project-card__link">{{ t.project_view }}</a>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <div class="project-card__media">
+                        <img src="{{ url_for('static', filename='images/project1.jpeg') }}" alt="" width="800" height="600" loading="lazy" onerror="this.parentElement.classList.add('project-card__media--fallback')">
+                    </div>
+                    <div class="project-card__body">
+                        <span class="project-card__loc">{{ t.proj2_loc }}</span>
+                        <h3 class="project-card__title">{{ t.proj2_title }}</h3>
+                        <a href="#contact" class="project-card__link">{{ t.project_view }}</a>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <div class="project-card__media">
+                        <img src="{{ url_for('static', filename='images/project2.jpeg') }}" alt="" width="800" height="600" loading="lazy" onerror="this.parentElement.classList.add('project-card__media--fallback')">
+                    </div>
+                    <div class="project-card__body">
+                        <span class="project-card__loc">{{ t.proj3_loc }}</span>
+                        <h3 class="project-card__title">{{ t.proj3_title }}</h3>
+                        <a href="#contact" class="project-card__link">{{ t.project_view }}</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--light" id="news">
+        <div class="container">
+            <header class="section-head">
+                <h2 class="section-head__title">{{ t.news_title }}</h2>
+            </header>
+            <div class="news-grid">
+                <article class="news-card">
+                    <time class="news-card__date" datetime="2026-04-01">01-04-2026</time>
+                    <h3 class="news-card__title">{{ t.news1_title }}</h3>
+                    <a href="#contact" class="link-more">{% if lang == 'ar' %}{{ t.read_more }} ←{% else %}→ {{ t.read_more }}{% endif %}</a>
+                </article>
+                <article class="news-card">
+                    <time class="news-card__date" datetime="2026-03-15">15-03-2026</time>
+                    <h3 class="news-card__title">{{ t.news2_title }}</h3>
+                    <a href="#contact" class="link-more">{% if lang == 'ar' %}{{ t.read_more }} ←{% else %}→ {{ t.read_more }}{% endif %}</a>
+                </article>
+                <article class="news-card">
+                    <time class="news-card__date" datetime="2026-02-20">20-02-2026</time>
+                    <h3 class="news-card__title">{{ t.news3_title }}</h3>
+                    <a href="#contact" class="link-more">{% if lang == 'ar' %}{{ t.read_more }} ←{% else %}→ {{ t.read_more }}{% endif %}</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter" id="newsletter">
+        <div class="container newsletter__inner">
+            <h2 class="newsletter__title">{{ t.newsletter_title }}</h2>
+            <form class="newsletter__form" action="#" method="post">
+                <label class="visually-hidden" for="email-news">{{ t.newsletter_label_email }}</label>
+                <input type="email" id="email-news" name="email" class="newsletter__input" placeholder="{{ t.newsletter_placeholder }}" autocomplete="email">
+                <button type="submit" class="btn btn--primary">{{ t.newsletter_btn }}</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="container footer__grid">
+            <div class="footer__brand">
+                <img class="footer__logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ t.logo_alt }}" width="180" height="48" loading="lazy" decoding="async">
+                <p class="footer__desc">{{ t.footer_desc }}</p>
+            </div>
+            <div>
+                <h3 class="footer__heading">{{ t.footer_quick }}</h3>
+                <ul class="footer__links">
+                    <li><a href="#projects">{{ t.nav_projects }}</a></li>
+                    <li><a href="#top">{{ t.nav_home }}</a></li>
+                    <li><a href="#news">{{ t.nav_news }}</a></li>
+                    <li><a href="#story">{{ t.nav_about }}</a></li>
+                    <li><a href="#contact">{{ t.nav_contact }}</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer__heading">{{ t.footer_office_title }}</h3>
+                <p class="footer__text">{{ t.footer_address }}</p>
+                <p class="footer__text"><a href="tel:+971525691003">+971525691003</a></p>
+                <p class="footer__text"><a href="mailto:{{ t.footer_email }}">{{ t.footer_email }}</a></p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <div class="container footer__bottom-inner">
+                <p>© <span id="year"></span> SAUD SHEHATHA — {{ t.footer_rights }}</p>
+                <p><a href="#">{{ t.footer_privacy }}</a> · <a href="#">{{ t.footer_payment }}</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js', v='2') }}" defer></script>
+</body>
+</html>
