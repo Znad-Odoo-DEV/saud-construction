@@ -150,22 +150,22 @@
             <div class="projects-grid">
                 <article class="project-card">
                     <div class="project-card__media">
-                        <img src="{{ url_for('static', filename='images/hero-bg.jpeg') }}" alt="" width="800" height="600" loading="lazy" onerror="this.parentElement.classList.add('project-card__media--fallback')">
+                        <img src="{{ url_for('static', filename='images/hero-bg.png') }}" alt="" width="800" height="600" loading="lazy" onerror="this.parentElement.classList.add('project-card__media--fallback')">
                     </div>
                     <div class="project-card__body">
                         <span class="project-card__loc">{{ t.proj1_loc }}</span>
                         <h3 class="project-card__title">{{ t.proj1_title }}</h3>
-                        <a href="#contact" class="project-card__link">{{ t.project_view }}</a>
+                        <a href="#" class="project-card__link js-open-project" data-project-title="{{ t.proj1_title }}" data-gallery="{{ url_for('static', filename='images/hero-bg.png') }}">{{ t.project_view }}</a>
                     </div>
                 </article>
                 <article class="project-card">
                     <div class="project-card__media">
-                        <img src="{{ url_for('static', filename='images/project1.jpeg') }}" alt="" width="800" height="600" loading="lazy" onerror="this.parentElement.classList.add('project-card__media--fallback')">
+                        <img src="{{ url_for('static', filename='images/tecom1.jpeg') }}" alt="" width="800" height="600" loading="lazy" onerror="this.parentElement.classList.add('project-card__media--fallback')">
                     </div>
                     <div class="project-card__body">
                         <span class="project-card__loc">{{ t.proj2_loc }}</span>
                         <h3 class="project-card__title">{{ t.proj2_title }}</h3>
-                        <a href="#contact" class="project-card__link">{{ t.project_view }}</a>
+                        <a href="#" class="project-card__link js-open-project" data-project-title="{{ t.proj2_title }}" data-gallery="{{ url_for('static', filename='images/tecom1.jpeg') }},{{ url_for('static', filename='images/tecom2.jpeg') }},{{ url_for('static', filename='images/tecom3.jpeg') }},{{ url_for('static', filename='images/tecom4.jpeg') }}">{{ t.project_view }}</a>
                     </div>
                 </article>
                 <article class="project-card">
@@ -175,7 +175,7 @@
                     <div class="project-card__body">
                         <span class="project-card__loc">{{ t.proj3_loc }}</span>
                         <h3 class="project-card__title">{{ t.proj3_title }}</h3>
-                        <a href="#contact" class="project-card__link">{{ t.project_view }}</a>
+                        <a href="#" class="project-card__link js-open-project" data-project-title="{{ t.proj3_title }}" data-gallery="{{ url_for('static', filename='images/project2.jpeg') }}">{{ t.project_view }}</a>
                     </div>
                 </article>
             </div>
@@ -249,6 +249,20 @@
         </div>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/script.js', v='2') }}" defer></script>
+    <div class="project-modal" id="project-modal" hidden>
+        <div class="project-modal__backdrop js-close-project-modal"></div>
+        <div class="project-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+            <button type="button" class="project-modal__close js-close-project-modal" aria-label="Close">×</button>
+            <h3 class="project-modal__title" id="project-modal-title"></h3>
+            <div class="project-modal__viewer">
+                <button type="button" class="project-modal__nav project-modal__nav--prev" aria-label="Previous image">‹</button>
+                <img class="project-modal__image" src="" alt="" loading="eager">
+                <button type="button" class="project-modal__nav project-modal__nav--next" aria-label="Next image">›</button>
+            </div>
+            <div class="project-modal__thumbs" id="project-modal-thumbs"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js', v='3') }}" defer></script>
 </body>
 </html>

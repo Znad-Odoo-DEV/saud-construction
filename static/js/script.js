@@ -63,4 +63,107 @@
             observer.observe(el);
         });
     }
+
+    var modal = document.getElementById("project-modal");
+    var modalImage = modal ? modal.querySelector(".project-modal__image") : null;
+    var modalTitle = modal ? modal.querySelector(".project-modal__title") : null;
+    var modalThumbs = document.getElementById("project-modal-thumbs");
+    var prevBtn = modal ? modal.querySelector(".project-modal__nav--prev") : null;
+    var nextBtn = modal ? modal.querySelector(".project-modal__nav--next") : null;
+    var activeGallery = [];
+    var activeIndex = 0;
+
+    function renderModalImage() {
+        if (!modalImage || !activeGallery.length) return;
+        modalImage.src = activeGallery[activeIndex];
+        modalImage.alt = (modalTitle ? modalTitle.textContent : "Project image") + " " + (activeIndex + 1);
+
+        if (!modalThumbs) return;
+        modalThumbs.innerHTML = "";
+        activeGallery.forEach(function (src, index) {
+            var thumb = document.createElement("button");
+            thumb.type = "button";
+            thumb.className = "project-modal__thumb" + (index === activeIndex ? " is-active" : "");
+            thumb.setAttribute("aria-label", "Image " + (index + 1));
+            thumb.addEventListener("click", function () {
+                activeIndex = index;
+                renderModalImage();
+            });
+
+            var img = document.createElement("img");
+            img.src = src;
+            img.alt = "";
+            img.loading = "lazy";
+            thumb.appendChild(img);
+            modalThumbs.appendChild(thumb);
+        });
+    }
+
+    function openProjectModal(title, gallery) {
+        if (!modal || !modalImage || !gallery.length) return;
+        activeGallery = gallery;
+        activeIndex = 0;
+        if (modalTitle) modalTitle.textContent = title || "Project";
+        modal.hidden = false;
+        document.body.style.overflow = "hidden";
+        renderModalImage();
+    }
+
+    function closeProjectModal() {
+        if (!modal) return;
+        modal.hidden = true;
+        document.body.style.overflow = "";
+    }
+
+    document.querySelectorAll(".js-open-project").forEach(function (trigger) {
+        trigger.addEventListener("click", function (event) {
+            event.preventDefault();
+            var title = trigger.getAttribute("data-project-title") || "Project";
+            var galleryRaw = trigger.getAttribute("data-gallery") || "";
+            var gallery = galleryRaw
+                .split(",")
+                .map(function (item) { return item.trim(); })
+                .filter(function (item) { return item.length > 0; });
+            openProjectModal(title, gallery);
+        });
+    });
+
+    if (modal) {
+        modal.querySelectorAll(".js-close-project-modal").forEach(function (el) {
+            el.addEventListener("click", closeProjectModal);
+        });
+
+        modal.addEventListener("click", function (event) {
+            if (event.target === modal) closeProjectModal();
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener("click", function () {
+            if (!activeGallery.length) return;
+            activeIndex = (activeIndex - 1 + activeGallery.length) % activeGallery.length;
+            renderModalImage();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener("click", function () {
+            if (!activeGallery.length) return;
+            activeIndex = (activeIndex + 1) % activeGallery.length;
+            renderModalImage();
+        });
+    }
+
+    document.addEventListener("keydown", function (event) {
+        if (!modal || modal.hidden) return;
+        if (event.key === "Escape") closeProjectModal();
+        if (event.key === "ArrowLeft") {
+            activeIndex = (activeIndex - 1 + activeGallery.length) % activeGallery.length;
+            renderModalImage();
+        }
+        if (event.key === "ArrowRight") {
+            activeIndex = (activeIndex + 1) % activeGallery.length;
+            renderModalImage();
+        }
+    });
 })();
